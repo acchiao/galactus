@@ -1,15 +1,21 @@
 {
+  "name": "galactus",
+  "version": "0.1.0",
+  "description": "The All-Knowing User Service Provider Aggregator.",
+  "repository": "https://github.com/acchiao/galactus",
+  "author": "acchiao",
+  "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "npm run development",
+    "dev": "yarn run development",
     "development": "mix",
     "watch": "mix watch",
     "watch-poll": "mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
-    "prod": "npm run production",
+    "prod": "yarn run production",
     "production": "mix --production"
   },
-  "devDependencies": {
+  "dependencies": {
     "axios": "^0.25",
     "laravel-mix": "^6.0.6",
     "lodash": "^4.17.19",
