@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 11.0.4
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.4.0
+- name: meilisearch
+  repository: https://meilisearch.github.io/meilisearch-kubernetes
+  version: 0.1.26
+digest: sha256:3a7b9ed83e99ac4c5e589f0558e664d19e6e91e9b9a022c62f672f55f776900d
+generated: "2022-02-16T15:49:04.224743-06:00"
