@@ -3,6 +3,7 @@ name: galactus
 version: 0.1.0
 appVersion: "0.1.0"
 kubeVersion: ">= 1.20.0-0"
+icon: https://raw.githubusercontent.com/acchiao/galactus/main/charts/galactus/chart-icon.png
 description: The All-Knowing User Service Provider Aggregator.
 type: application
 keywords:
