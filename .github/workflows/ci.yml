@@ -22,14 +22,14 @@ jobs:
           install: true
       - uses: docker/login-action@v1
         with:
-          registry: ${{ env.REGISTRY_URL }}/${{ secrets.REGISTRY_NAME }}/${{ env.PROJECT_NAME }}
+          registry: ${{ env.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_TOKEN }}
           password: ${{ secrets.REGISTRY_TOKEN }}
           logout: true
       - uses: docker/metadata-action@v3
         id: meta
         with:
-          images: ${{ secrets.REGISTRY_NAME }}
+          images: ${{ env.REGISTRY_URL }}/${{ secrets.REGISTRY_NAME }}/${{ env.PROJECT_NAME }}
           flavor: |
             latest=true
             prefix=
