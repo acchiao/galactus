@@ -1,0 +1,8 @@
+remote: origin
+target-branch: main
+chart-dirs:
+  - charts
+chart-repos:
+  - bitnami=https://charts.bitnami.com/bitnami
+  - meilisearch=https://meilisearch.github.io/meilisearch-kubernetes
+helm-extra-args: --timeout 600s

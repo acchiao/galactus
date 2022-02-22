@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+        with:
+          version: v3.8.0
+      - run: |
+          helm dependency update charts/galactus
+          helm lint charts/galactus
+      - uses: stackrox/kube-linter-action@v1
+        with:
+          directory: charts/galactus
+
+  kubeval:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+        with:
+          version: v3.8.0
+      - run: |
+          wget --no-verbose --show-progress --progress dot:giga https://github.com/instrumenta/kubeval/releases/download/v0.16.1/kubeval-linux-amd64.tar.gz
+          echo "2d6f9bda1423b93787fa05d9e8dfce2fc1190fefbcd9d0936b9635f3f78ba790  kubeval-linux-amd64.tar.gz" | sha256sum --check
+          tar xf kubeval-linux-amd64.tar.gz
+          mv kubeval /usr/local/bin
+      - run: |
+          helm dependency update charts/galactus
+          helm template charts/galactus | kubeval
+
+  ct-lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: azure/setup-helm@v1
+        with:
+          version: v3.8.0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - uses: helm/chart-testing-action@v2.2.0
+      - id: list-changed
+        run: |
+          changed=$(ct list-changed --config ct.yaml)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+      - run: ct lint --config ct.yaml
+
+  ct-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: azure/setup-helm@v1
+        with:
+          version: v3.8.0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - uses: helm/chart-testing-action@v2.2.0
+      - id: list-changed
+        run: |
+          changed=$(ct list-changed --config ct.yaml)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+      - run: ct lint --config ct.yaml
+      - uses: helm/kind-action@v1.2.0
+        if: steps.list-changed.outputs.changed == 'true'
+      - run: ct install --config ct.yaml
