@@ -12,7 +12,7 @@ env:
   PROJECT_NAME: galactus
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
@@ -61,7 +61,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
       - run: echo ${{ steps.build.outputs.digest }}
 
-jobs:
   lint:
     runs-on: ubuntu-20.04
     steps:
