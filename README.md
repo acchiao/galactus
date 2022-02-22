@@ -52,11 +52,12 @@ helm uninstall [RELEASE_NAME]
 sail build --no-cache
 sail up
 
-export DOCKER_BUILDKIT=1
 docker buildx create --use
 docker buildx build \
   --file Dockerfile \
   --secret id=auth,src=auth.json \
   --tag galactus \
   --load .
+
+docker scan --file Dockerfile galactus
 ```

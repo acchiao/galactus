@@ -7,7 +7,8 @@ WORKDIR ${COMPOSER_HOME}
 
 COPY composer.json composer.lock ${COMPOSER_HOME}/
 
-RUN --mount=type=secret,id=auth,dst=${COMPOSER_HOME}/auth.json composer install \
+RUN --mount=type=secret,id=auth,dst=${COMPOSER_HOME}/auth.json \
+    composer install \
           --ignore-platform-reqs \
           --prefer-dist \
           --optimize-autoloader \
