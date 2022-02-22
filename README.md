@@ -1,35 +1,50 @@
 # galactus
 
+[![CI](https://github.com/acchiao/galactus/actions/workflows/ci.yml/badge.svg)](https://github.com/acchiao/galactus/actions/workflows/ci.yml)
+[![Release](https://github.com/acchiao/galactus/actions/workflows/release.yml/badge.svg)](https://github.com/acchiao/galactus/actions/workflows/release.yml)
+
 The All-Knowing User Service Provider Aggregator.
+
+## Prerequisites
+
+- [Helm] ^3.8.0
+
+[helm]: https://helm.sh/
 
 ## Usage
 
 ### Helm
 
-[Helm](https://helm.sh) must be installed to use the charts.  Please refer to
-Helm's [documentation](https://helm.sh/docs) to get started.
-
-Once Helm has been set up correctly, add the repo as follows:
+Add the chart repository.
 
 ```sh
 helm repo add galactus https://acchiao.github.io/galactus
+helm repo update
 ```
 
-If you had already added this repo earlier, run `helm repo update` to retrieve
-the latest versions of the packages. You can then run `helm search repo
-galactus` to see the charts.
-
-To install the galactus chart:
+To search the repository:
 
 ```sh
-helm install galactus galactus/galactus
+helm search repo galactus
+````
+
+To install the charts:
+
+```sh
+helm install [RELEASE_NAME] galactus/galactus
 ```
 
-To uninstall the chart:
+To upgrade the charts:
 
+```sh
+helm upgrade --install [RELEASE_NAME] galactus/galactus
 ```
-helm delete galactus
-```
+
+To uninstall the charts:
+
+```sh
+helm uninstall [RELEASE_NAME]
+````
 
 ### Development
 
@@ -37,5 +52,11 @@ helm delete galactus
 sail build --no-cache
 sail up
 
-DOCKER_BUILDKIT=1 docker buildx build --file Dockerfile --tag galactus --load .
+export DOCKER_BUILDKIT=1
+docker buildx create --use
+docker buildx build \
+  --file Dockerfile \
+  --secret id=auth,src=auth.json \
+  --tag galactus \
+  --load .
 ```
