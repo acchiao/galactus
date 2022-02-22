@@ -29,7 +29,7 @@ WORKDIR ${GALACTUS_HOME}
 COPY --from=composer /app/vendor /app/vendor
 COPY package.json yarn.lock ${GALACTUS_HOME}/
 
-RUN yarn install --frozen-lockfile --check-files \
+RUN yarn install --frozen-lockfile --ignore-scripts --check-files \
       && yarn cache clean --all
 
 COPY webpack.mix.js tailwind.config.js ${GALACTUS_HOME}/
