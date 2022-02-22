@@ -7,7 +7,7 @@ WORKDIR ${COMPOSER_HOME}
 
 COPY composer.json composer.lock ${COMPOSER_HOME}/
 
-RUN composer install \
+RUN --mount=type=secret,id=auth,dst=${COMPOSER_HOME}/auth.json composer install \
           --ignore-platform-reqs \
           --prefer-dist \
           --optimize-autoloader \
@@ -41,6 +41,8 @@ RUN yarn run production
 FROM php:8.1-fpm-bullseye AS app
 
 ENV DEBIAN_FRONTEND noninteractive
+
+COPY --from=composer /app/vendor /app/vendor
 
 RUN apt-get update \
       && apt-get --yes install --no-install-recommends \

@@ -7,9 +7,12 @@
 .idea
 .nvmrc
 .phpunit.result.cache
+auth.json
 charts
 coverage
 coverage.xml
+cr.yaml
+ct.yaml
 data.ms
 docker
 docker-compose.yml
