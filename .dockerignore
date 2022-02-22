@@ -14,6 +14,11 @@ coverage.xml
 cr.yaml
 ct.yaml
 data.ms
+public/css
+public/hot
+public/js
+public/mix-manifest.json
+public/storage
 docker
 docker-compose.yml
 Dockerfile
