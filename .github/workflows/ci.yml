@@ -25,7 +25,6 @@ jobs:
           registry: ${{ env.REGISTRY_URL }}/${{ secrets.REGISTRY_NAME }}/${{ env.PROJECT_NAME }}
           username: ${{ secrets.REGISTRY_TOKEN }}
           password: ${{ secrets.REGISTRY_TOKEN }}
-          logout: true
       - uses: docker/metadata-action@v3
         id: meta
         with:
@@ -55,8 +54,6 @@ jobs:
           secrets: |
             "auth=${{ secrets.COMPOSER_AUTH }}"
           target: app
-          cache-from: type=registry,ref=${{ env.REGISTRY_URL }}/${{ secrets.REGISTRY_NAME }}/${{ env.PROJECT_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY_URL }}/${{ secrets.REGISTRY_NAME }}/${{ env.PROJECT_NAME }}:buildcache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - run: echo ${{ steps.build.outputs.digest }}
