@@ -3,47 +3,20 @@
 [![CI](https://github.com/acchiao/galactus/actions/workflows/ci.yml/badge.svg)](https://github.com/acchiao/galactus/actions/workflows/ci.yml)
 [![Release](https://github.com/acchiao/galactus/actions/workflows/release.yml/badge.svg)](https://github.com/acchiao/galactus/actions/workflows/release.yml)
 
-The All-Knowing User Service Provider Aggregator.
-
 ## Prerequisites
 
-- [Helm] ^3.8.0
+  * [Helm] ^3.8.0
 
-[helm]: https://helm.sh/
+[Helm]: https://helm.sh/
 
-## Usage
+## Charts
 
-### Helm
+Add the galactus repository to Helm:
 
-Add the chart repository.
-
-```sh
-helm repo add galactus https://acchiao.github.io/galactus
+```shell
+helm repo add raccoon https://galactus.raccoon.team
 helm repo update
-```
-
-To search the repository:
-
-```sh
 helm search repo galactus
-````
-
-To install the charts:
-
-```sh
-helm install [RELEASE_NAME] galactus/galactus
-```
-
-To upgrade the charts:
-
-```sh
-helm upgrade --install [RELEASE_NAME] galactus/galactus
-```
-
-To uninstall the charts:
-
-```sh
-helm uninstall [RELEASE_NAME]
 ````
 
 ### Development
