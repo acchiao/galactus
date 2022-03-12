@@ -60,7 +60,7 @@ RUN apt-get update \
       && rm -rf /var/lib/apt/lists/*
 
 RUN pecl channel-update pecl.php.net \
-      && pecl install --onlyreqdeps --force redis-5.3.6 \
+      && pecl install --onlyreqdeps --force redis-5.3.7 \
       && pecl clear-cache \
       && docker-php-ext-configure intl \
       && docker-php-ext-configure opcache \
