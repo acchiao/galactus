@@ -125,7 +125,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: azure/setup-helm@v1
         with:
-          version: v3.8.0
+          version: v3.8.1
       - run: |
           helm dependency update charts/galactus
           helm lint charts/galactus
@@ -140,7 +140,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: azure/setup-helm@v1
         with:
-          version: v3.8.0
+          version: v3.8.1
       - run: |
           wget --no-verbose --show-progress --progress dot:giga https://github.com/instrumenta/kubeval/releases/download/v0.16.1/kubeval-linux-amd64.tar.gz
           echo "2d6f9bda1423b93787fa05d9e8dfce2fc1190fefbcd9d0936b9635f3f78ba790  kubeval-linux-amd64.tar.gz" | sha256sum --check
@@ -149,6 +149,23 @@ jobs:
       - run: |
           helm dependency update charts/galactus
           helm template charts/galactus | kubeval
+
+  kubeaudit:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: azure/setup-helm@v1
+        with:
+          version: v3.8.1
+      - run: |
+          wget --no-verbose --show-progress --progress dot:giga https://github.com/Shopify/kubeaudit/releases/download/0.16.0/kubeaudit_0.16.0_linux_amd64.tar.gz
+          echo "f8e9fe2c34897edeac44169f9d33fa492b251c595284eddfe9de494a3a0219fe  kubeaudit_0.16.0_linux_amd64.tar.gz" | sha256sum --check
+          tar xf kubeaudit_0.16.0_linux_amd64.tar.gz
+          mv kubeaudit /usr/local/bin
+      - run: |
+          helm dependency update charts/galactus
+          helm template charts/galactus > manifest.yml
+          kubeaudit all --manifest manifest.yml
 
   ct-lint:
     runs-on: ubuntu-20.04
@@ -179,7 +196,7 @@ jobs:
           fetch-depth: 0
       - uses: azure/setup-helm@v1
         with:
-          version: v3.8.0
+          version: v3.8.1
       - uses: actions/setup-python@v3
         with:
           python-version: "3.10"
