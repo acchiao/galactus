@@ -1,8 +1,6 @@
 **/charts/*.tgz
 
 .env
-.env.*
-!.env.template
 auth.json
 
 .phpunit.result.cache
