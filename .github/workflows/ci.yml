@@ -103,7 +103,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
       - run: composer install --no-progress --prefer-dist --optimize-autoloader
       - run: |
-          php -r "file_exists('.env') || copy('.env.example', '.env');"
+          php -r "file_exists('.env') || copy('.env.template', '.env');"
           php artisan key:generate
       - run: php artisan config:clear
       - run: php artisan migrate -v
@@ -161,7 +161,6 @@ jobs:
       - run: |
           helm dependency update charts/galactus
           helm template charts/galactus > manifest.yml
-          kubeaudit all --manifest manifest.yml
           kubeaudit all --manifest manifests/galactus.yml
 
   ct-lint:
