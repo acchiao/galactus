@@ -166,6 +166,7 @@ jobs:
           helm dependency update charts/galactus
           helm template charts/galactus > manifest.yml
           kubeaudit all --manifest manifest.yml
+          kubeaudit all --manifest manifests/galactus.yml
 
   ct-lint:
     runs-on: ubuntu-20.04
