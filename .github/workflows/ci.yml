@@ -87,15 +87,11 @@ jobs:
         ports:
           - 6379/tcp
         options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    strategy:
-      fail-fast: false
-      matrix:
-        php-versions: ['7.4', '8.0', '8.1']
     steps:
       - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: "8.1"
           extensions: mbstring, dom, fileinfo, pgsql
           coverage: xdebug
       - id: composer-cache
