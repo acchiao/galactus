@@ -1,20 +1,20 @@
 ---
 version: "3"
 services:
-  laravel.test:
+  galactus:
     build:
       context: ./docker
       dockerfile: Dockerfile
       args:
-        WWWGROUP: "${WWWGROUP}"
+        GROUP_ID: "${GROUP_ID:-1000}"
     image: galactus/app
     extra_hosts:
       - "host.docker.internal:host-gateway"
     ports:
       - "${APP_PORT:-80}:80"
     environment:
-      WWWUSER: "${WWWUSER}"
-      WWWGROUP: "${WWWGROUP}"
+      USER_ID: "${USER_ID:-1000}"
+      USER: "${USER}"
       LARAVEL_SAIL: 1
       XDEBUG_MODE: "${SAIL_XDEBUG_MODE:-off}"
       XDEBUG_CONFIG: "${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}"
@@ -26,9 +26,8 @@ services:
       - pgsql
       - redis
       - meilisearch
-      - selenium
   pgsql:
-    image: "postgres:14.2"
+    image: "postgres:13"
     ports:
       - "${FORWARD_DB_PORT:-5432}:5432"
     environment:
@@ -45,7 +44,7 @@ services:
       retries: 3
       timeout: 5s
   redis:
-    image: "redis:6.2.6-alpine"
+    image: "redis:alpine"
     ports:
       - "${FORWARD_REDIS_PORT:-6379}:6379"
     volumes:
@@ -57,9 +56,11 @@ services:
       retries: 3
       timeout: 5s
   meilisearch:
-    image: "getmeili/meilisearch:v0.25.2"
+    image: "getmeili/meilisearch:latest"
     ports:
       - "${FORWARD_MEILISEARCH_PORT:-7700}:7700"
+    environment:
+      MEILI_NO_ANALYTICS: true
     volumes:
       - "galactus-meilisearch:/data.ms"
     networks:
@@ -68,19 +69,6 @@ services:
       test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:7700/health"]
       retries: 3
       timeout: 5s
-  mailhog:
-    image: "mailhog/mailhog:v1.0.1"
-    ports:
-      - "${FORWARD_MAILHOG_PORT:-1025}:1025"
-      - "${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025"
-    networks:
-      - galactus
-  selenium:
-    image: "selenium/standalone-chrome"
-    volumes:
-      - "/dev/shm:/dev/shm"
-    networks:
-      - galactus
 networks:
   galactus:
     driver: bridge

@@ -41,6 +41,10 @@ RUN yarn run production
 
 FROM php:8.1-fpm-bullseye AS app
 
+ARG GROUP_ID=1000
+ARG USER_ID=1000
+ARG USER=galactus
+
 ENV DEBIAN_FRONTEND noninteractive
 
 COPY --from=composer /app/vendor /app/vendor
@@ -76,3 +80,10 @@ RUN pecl channel-update pecl.php.net \
       && docker-php-ext-enable redis \
       && docker-php-ext-enable opcache \
       && docker-php-source delete
+
+RUN groupadd --force -g ${GROUP_ID} ${USER}
+RUN useradd --system --create-home --no-log-init --shell /bin/bash --no-user-group --gid ${GROUP_ID} --uid ${USER_ID} ${USER}
+
+USER ${USER}
+
+EXPOSE 8000
