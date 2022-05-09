@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99e45eeeeec34a3c7f9d233b20de8c9b",
+    "content-hash": "4dd0b1b3c763e1067225900b85b48813",
     "packages": [
         {
             "name": "brick/math",
@@ -1793,16 +1793,16 @@
         },
         {
             "name": "meilisearch/meilisearch-php",
-            "version": "v0.22.0",
+            "version": "v0.23.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/meilisearch/meilisearch-php.git",
-                "reference": "0229ce11be0ac2ede91577bbcd6bdfe17af63e05"
+                "reference": "e6048db909634f86fa8d346915819e83806aed86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/0229ce11be0ac2ede91577bbcd6bdfe17af63e05",
-                "reference": "0229ce11be0ac2ede91577bbcd6bdfe17af63e05",
+                "url": "https://api.github.com/repos/meilisearch/meilisearch-php/zipball/e6048db909634f86fa8d346915819e83806aed86",
+                "reference": "e6048db909634f86fa8d346915819e83806aed86",
                 "shasum": ""
             },
             "require": {
@@ -1854,9 +1854,9 @@
             ],
             "support": {
                 "issues": "https://github.com/meilisearch/meilisearch-php/issues",
-                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.22.0"
+                "source": "https://github.com/meilisearch/meilisearch-php/tree/v0.23.2"
             },
-            "time": "2022-02-14T16:00:33+00:00"
+            "time": "2022-05-09T11:31:15+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3542,16 +3542,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "c726b64c1ccfe2896cb7df2e1331c357ad1c8ced"
+                "reference": "26954b3d62a6c5fd0ea8a2a00c0353a14978d05c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/c726b64c1ccfe2896cb7df2e1331c357ad1c8ced",
-                "reference": "c726b64c1ccfe2896cb7df2e1331c357ad1c8ced",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/26954b3d62a6c5fd0ea8a2a00c0353a14978d05c",
+                "reference": "26954b3d62a6c5fd0ea8a2a00c0353a14978d05c",
                 "shasum": ""
             },
             "require": {
@@ -3589,7 +3589,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.0.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.0.1"
             },
             "funding": [
                 {
@@ -3605,7 +3605,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-01T23:48:49+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/error-handler",
@@ -8923,5 +8923,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
