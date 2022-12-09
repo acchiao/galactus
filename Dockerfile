@@ -39,7 +39,7 @@ COPY resources/ ${GALACTUS_HOME}/resources/
 
 RUN yarn run production
 
-FROM php:8.1-fpm-bullseye AS app
+FROM php:8.2-fpm-bullseye AS app
 
 ARG GROUP_ID=1000
 ARG USER_ID=1000
