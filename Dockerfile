@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM composer:2.2.7 AS composer
+FROM composer:2.5.2 AS composer
 
 ENV COMPOSER_HOME=/app
 
