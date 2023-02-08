@@ -19,7 +19,7 @@
         "laravel/sail": "^1.13",
         "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "roave/security-advisories": "dev-latest",
         "spatie/laravel-ignition": "^1.0"
     },
