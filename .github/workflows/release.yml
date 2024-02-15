@@ -32,7 +32,7 @@ jobs:
           helm repo add meilisearch https://meilisearch.github.io/meilisearch-kubernetes
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.3.0
+        uses: helm/chart-releaser-action@v1.6.0
         with:
           charts_dir: charts
           config: cr.yaml
