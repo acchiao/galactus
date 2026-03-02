@@ -1,10 +1,7 @@
----
 name: CI
 
 on:
   push:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
@@ -13,7 +10,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v1
@@ -61,7 +58,7 @@ jobs:
       - run: echo ${{ steps.build.outputs.digest }}
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     env:
       BROADCAST_DRIVER: log
       CACHE_DRIVER: redis
@@ -116,7 +113,7 @@ jobs:
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
       - uses: azure/setup-helm@v1
@@ -131,7 +128,7 @@ jobs:
           directory: charts/galactus
 
   kubeval:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
       - uses: azure/setup-helm@v1
@@ -147,7 +144,7 @@ jobs:
           helm template charts/galactus | kubeval
 
   kubeaudit:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
       - uses: azure/setup-helm@v1
@@ -164,7 +161,7 @@ jobs:
           kubeaudit all --manifest manifests/galactus.yml
 
   ct-lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:
@@ -185,7 +182,7 @@ jobs:
       - run: ct lint --config ct.yaml
 
   ct-test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v3
         with:

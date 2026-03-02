@@ -1,0 +1,46 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      timezone: America/Los_Angeles
+      interval: daily
+      time: "09:00"
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      timezone: America/Los_Angeles
+      interval: daily
+      time: "09:00"
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
+
+  - package-ecosystem: composer
+    directory: /
+    schedule:
+      timezone: America/Los_Angeles
+      interval: daily
+      time: "09:00"
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      timezone: America/Los_Angeles
+      interval: daily
+      time: "09:00"
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
