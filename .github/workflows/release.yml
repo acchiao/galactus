@@ -16,7 +16,7 @@ jobs:
       - run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - uses: azure/setup-helm@v2.0
+      - uses: azure/setup-helm@v4
         with:
           version: v3.8.0
       - run: |
