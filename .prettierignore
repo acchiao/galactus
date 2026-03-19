@@ -2,3 +2,4 @@ docs/
 **/migrations/
 devcontainer.json
 galactus/templates/
+charts/
