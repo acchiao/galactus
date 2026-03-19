@@ -61,6 +61,7 @@ uv run coverage run -m pytest && uv run coverage html  # Coverage report
 ### Settings Hierarchy
 
 Split settings in `config/settings/`:
+
 - `base.py` — shared settings (DB, apps, middleware, Celery, allauth, DRF, webpack)
 - `local.py` — dev overrides (DEBUG=True, debug toolbar, django-extensions, LocMemCache, Mailpit email)
 - `test.py` — fast test settings (MD5 passwords, locmem email, FakeWebpackLoader)
@@ -85,6 +86,7 @@ Custom user model at `galactus/users/models.py` — **email-only authentication,
 ### App Structure
 
 New Django apps go in `galactus/` (the `APPS_DIR`). Each app follows this pattern:
+
 - `models.py`, `admin.py`, `views.py`, `urls.py`, `tasks.py`
 - `api/views.py`, `api/serializers.py` — DRF API layer
 - `tests/` — test directory with `factories.py` (factory_boy), test files per layer
@@ -112,5 +114,6 @@ Celery with Redis broker. Tasks use `@shared_task` decorator. Celery Beat uses `
 ## CI
 
 GitHub Actions (`.github/workflows/ci.yml`) runs on PRs/pushes to `main`:
+
 1. **Linter job**: pre-commit hooks
 2. **Pytest job**: builds Docker images, checks for pending migrations (`makemigrations --check`), runs migrations, then `pytest`
