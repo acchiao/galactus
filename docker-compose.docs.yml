@@ -13,5 +13,5 @@ services:
       - ./config:/app/config:z
       - ./galactus:/app/galactus:z
     ports:
-      - '9000:9000'
+      - "9000:9000"
     command: /start-docs
