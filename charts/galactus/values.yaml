@@ -1,6 +1,6 @@
 image:
   repository: galactus
-  tag: latest
+  tag: ""
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -11,6 +11,7 @@ serviceAccount:
   create: true
   annotations: {}
   name: ""
+  automountToken: true
 
 # Django web
 web:
@@ -187,9 +188,9 @@ config:
 
 # Secret values (use externalSecrets in production instead)
 secret:
-  djangoSecretKey: changeme
+  djangoSecretKey: ""
   postgresUser: galactus
-  postgresPassword: changeme
+  postgresPassword: ""
   sendgridApiKey: ""
   sentryDsn: ""
   djangoAdminUrl: admin/
@@ -202,7 +203,7 @@ postgresql:
   enabled: true
   auth:
     username: galactus
-    password: changeme
+    password: ""
     database: galactus
   primary:
     persistence:

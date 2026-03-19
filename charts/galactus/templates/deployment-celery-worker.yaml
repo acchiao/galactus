@@ -20,7 +20,11 @@ spec:
         app.kubernetes.io/component: celery-worker
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- if .Values.externalSecrets.enabled }}
+        checksum/secret: {{ include (print $.Template.BasePath "/external-secret.yaml") . | sha256sum }}
+        {{- else }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
+        {{- end }}
     spec:
       serviceAccountName: {{ include "galactus.serviceAccountName" . }}
       containers:

@@ -12,4 +12,4 @@ spec:
     - name: wget
       image: busybox:1.37
       command: ["wget"]
-      args: ["--spider", "--timeout=5", "{{ include "galactus.fullname" . }}-web:80/"]
+      args: ["--spider", "--timeout=5", "http://{{ include "galactus.fullname" . }}-web:80/"]

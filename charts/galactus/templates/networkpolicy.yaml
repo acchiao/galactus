@@ -35,8 +35,7 @@ spec:
   policyTypes:
     - Egress
   egress:
-    - to: []
-      ports:
+    - ports:
         - port: 5432
           protocol: TCP
         - port: 6379
