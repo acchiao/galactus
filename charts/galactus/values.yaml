@@ -1,0 +1,232 @@
+image:
+  repository: galactus
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# Django web
+web:
+  replicas: 1
+  args: ["/start"]
+  port: 5000
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 3
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  extraEnv: []
+
+# Celery worker
+celeryWorker:
+  replicas: 1
+  args:
+    - celery
+    - -A
+    - config.celery_app
+    - worker
+    - -l
+    - INFO
+    - --pidfile=/tmp/celery-worker.pid
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  livenessProbe:
+    exec:
+      command: ["test", "-f", "/tmp/celery-worker.pid"]
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 5
+    failureThreshold: 6
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  extraEnv: []
+
+# Celery beat
+celeryBeat:
+  args: ["/start-celerybeat"]
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  extraEnv: []
+
+# Flower (optional)
+flower:
+  enabled: false
+  args: ["/start-flower"]
+  port: 5555
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  extraEnv: []
+
+# Migration job
+migration:
+  enabled: true
+  backoffLimit: 1
+  extraEnv: []
+
+# Ingress
+ingress:
+  enabled: false
+  type: traefik
+  className: ""
+  hosts:
+    - rats.dev
+  flowerHost: flower.rats.dev
+  tls:
+    enabled: true
+    clusterIssuer: letsencrypt-prod
+    certResolver: letsencrypt
+  annotations: {}
+
+# Autoscaling
+hpa:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+
+# KEDA
+keda:
+  enabled: false
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  pollingInterval: 15
+  cooldownPeriod: 300
+  celeryQueueName: celery
+
+# PodDisruptionBudget
+pdb:
+  enabled: false
+  minAvailable: 1
+
+# NetworkPolicy
+networkPolicy:
+  enabled: false
+  ingressNamespace: traefik
+
+# External Secrets
+externalSecrets:
+  enabled: false
+  store:
+    name: gcp-secret-manager
+    kind: ClusterSecretStore
+  refreshInterval: 1h
+  secretMapping: {}
+
+# GCP credentials fallback (non-GKE)
+gcp:
+  credentialsSecret: ""
+  credentialsMountPath: /var/secrets/google
+
+# ConfigMap values
+config:
+  djangoSettingsModule: config.settings.local
+  djangoAllowedHosts: "*"
+  webConcurrency: "4"
+  djangoGcpStorageBucketName: ""
+  djangoSecureSslRedirect: "False"
+  djangoAccountAllowRegistration: "True"
+  djangoDefaultFromEmail: "galactus <noreply@rats.dev>"
+  djangoServerEmail: ""
+  djangoEmailSubjectPrefix: "[galactus] "
+  sentryEnvironment: development
+  sentryTracesSampleRate: "0.0"
+
+# Secret values (use externalSecrets in production instead)
+secret:
+  djangoSecretKey: changeme
+  postgresUser: galactus
+  postgresPassword: changeme
+  sendgridApiKey: ""
+  sentryDsn: ""
+  djangoAdminUrl: admin/
+  celeryFlowerUser: ""
+  celeryFlowerPassword: ""
+  googleApplicationCredentials: ""
+
+# PostgreSQL subchart
+postgresql:
+  enabled: true
+  auth:
+    username: galactus
+    password: changeme
+    database: galactus
+  primary:
+    persistence:
+      size: 8Gi
+
+# Redis subchart
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+  master:
+    persistence:
+      size: 2Gi
+
+# External database (when postgresql.enabled=false)
+externalDatabase:
+  host: ""
+  port: "5432"
+  name: galactus
+  user: ""
+  password: ""
+
+# External Redis (when redis.enabled=false)
+externalRedis:
+  host: ""
+  port: "6379"

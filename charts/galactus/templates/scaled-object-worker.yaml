@@ -1,0 +1,22 @@
+{{- if .Values.keda.enabled }}
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ include "galactus.fullname" . }}-celery-worker
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: celery-worker
+spec:
+  scaleTargetRef:
+    name: {{ include "galactus.fullname" . }}-celery-worker
+  pollingInterval: {{ .Values.keda.pollingInterval }}
+  cooldownPeriod: {{ .Values.keda.cooldownPeriod }}
+  minReplicaCount: {{ .Values.keda.minReplicaCount }}
+  maxReplicaCount: {{ .Values.keda.maxReplicaCount }}
+  triggers:
+    - type: redis
+      metadata:
+        address: {{ include "galactus.redisAddress" . }}
+        listName: {{ .Values.keda.celeryQueueName }}
+        listLength: "5"
+{{- end }}

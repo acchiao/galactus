@@ -1,0 +1,55 @@
+{{- if and .Values.ingress.enabled (eq .Values.ingress.type "standard") }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "galactus.fullname" . }}
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+  annotations:
+    {{- if .Values.ingress.tls.enabled }}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.clusterIssuer }}
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+        {{- range .Values.ingress.hosts }}
+        - {{ . | quote }}
+        {{- end }}
+        {{- if .Values.flower.enabled }}
+        - {{ .Values.ingress.flowerHost | quote }}
+        {{- end }}
+      secretName: {{ include "galactus.fullname" . }}-tls
+  {{- end }}
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "galactus.fullname" $ }}-web
+                port:
+                  number: 80
+    {{- end }}
+    {{- if .Values.flower.enabled }}
+    - host: {{ .Values.ingress.flowerHost | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "galactus.fullname" . }}-flower
+                port:
+                  number: 5555
+    {{- end }}
+{{- end }}

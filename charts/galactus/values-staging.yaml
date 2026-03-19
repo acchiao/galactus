@@ -1,0 +1,37 @@
+web:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+celeryWorker:
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 4
+
+ingress:
+  enabled: true
+  type: traefik
+  hosts:
+    - staging.rats.dev
+
+config:
+  djangoSettingsModule: config.settings.production
+  djangoAllowedHosts: .staging.rats.dev
+  djangoSecureSslRedirect: "False"
+  djangoGcpStorageBucketName: galactus-staging-media
+  sentryEnvironment: staging
+  sentryTracesSampleRate: "1.0"
