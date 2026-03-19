@@ -1,0 +1,60 @@
+{{- if and .Values.ingress.enabled (eq .Values.ingress.type "traefik") }}
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ include "galactus.fullname" . }}-csrf
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: https
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "galactus.fullname" . }}-web
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: {{ range $i, $host := .Values.ingress.hosts }}{{ if $i }} || {{ end }}Host(`{{ $host }}`){{ end }}
+      kind: Rule
+      middlewares:
+        - name: {{ include "galactus.fullname" . }}-csrf
+      services:
+        - name: {{ include "galactus.fullname" . }}-web
+          port: 80
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    certResolver: {{ .Values.ingress.tls.certResolver }}
+  {{- end }}
+{{- if .Values.flower.enabled }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ include "galactus.fullname" . }}-flower
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`{{ .Values.ingress.flowerHost }}`)
+      kind: Rule
+      services:
+        - name: {{ include "galactus.fullname" . }}-flower
+          port: 5555
+  {{- if .Values.ingress.tls.enabled }}
+  tls:
+    certResolver: {{ .Values.ingress.tls.certResolver }}
+  {{- end }}
+{{- end }}
+{{- end }}

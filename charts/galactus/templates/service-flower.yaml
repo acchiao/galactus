@@ -1,0 +1,19 @@
+{{- if .Values.flower.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "galactus.fullname" . }}-flower
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+    app.kubernetes.io/component: flower
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5555
+      targetPort: flower
+      protocol: TCP
+      name: flower
+  selector:
+    {{- include "galactus.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: flower
+{{- end }}

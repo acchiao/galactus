@@ -1,0 +1,98 @@
+web:
+  replicas: 3
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
+
+celeryWorker:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
+
+celeryBeat:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+flower:
+  enabled: true
+
+hpa:
+  enabled: true
+  minReplicas: 3
+  maxReplicas: 10
+
+keda:
+  enabled: true
+  minReplicaCount: 1
+  maxReplicaCount: 10
+
+pdb:
+  enabled: true
+  minAvailable: 1
+
+ingress:
+  enabled: true
+  type: traefik
+  hosts:
+    - rats.dev
+    - www.rats.dev
+  flowerHost: flower.rats.dev
+
+# External managed services
+postgresql:
+  enabled: false
+
+redis:
+  enabled: false
+
+externalDatabase:
+  host: ""
+  port: "5432"
+  name: galactus
+
+externalRedis:
+  host: ""
+  port: "6379"
+
+externalSecrets:
+  enabled: true
+  store:
+    name: gcp-secret-manager
+    kind: ClusterSecretStore
+  refreshInterval: 1h
+  secretMapping:
+    DJANGO_SECRET_KEY: projects/galactus-prod/secrets/django-secret-key/versions/latest
+    POSTGRES_USER: projects/galactus-prod/secrets/postgres-user/versions/latest
+    POSTGRES_PASSWORD: projects/galactus-prod/secrets/postgres-password/versions/latest
+    SENDGRID_API_KEY: projects/galactus-prod/secrets/sendgrid-api-key/versions/latest
+    SENTRY_DSN: projects/galactus-prod/secrets/sentry-dsn/versions/latest
+    DJANGO_ADMIN_URL: projects/galactus-prod/secrets/django-admin-url/versions/latest
+    CELERY_FLOWER_USER: projects/galactus-prod/secrets/celery-flower-user/versions/latest
+    CELERY_FLOWER_PASSWORD: projects/galactus-prod/secrets/celery-flower-password/versions/latest
+
+serviceAccount:
+  create: true
+  annotations:
+    iam.gke.io/gcp-service-account: galactus@galactus-prod.iam.gserviceaccount.com
+
+config:
+  djangoSettingsModule: config.settings.production
+  djangoAllowedHosts: .rats.dev
+  djangoSecureSslRedirect: "False"
+  djangoGcpStorageBucketName: galactus-production-media
+  sentryEnvironment: production
+  sentryTracesSampleRate: "0.0"

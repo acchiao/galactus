@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "galactus.fullname" . }}
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+data:
+  DJANGO_SETTINGS_MODULE: {{ .Values.config.djangoSettingsModule | quote }}
+  DJANGO_ALLOWED_HOSTS: {{ .Values.config.djangoAllowedHosts | quote }}
+  REDIS_URL: {{ include "galactus.redisURL" . | quote }}
+  POSTGRES_HOST: {{ include "galactus.postgresHost" . | quote }}
+  POSTGRES_PORT: {{ include "galactus.postgresPort" . | quote }}
+  POSTGRES_DB: {{ include "galactus.postgresDB" . | quote }}
+  WEB_CONCURRENCY: {{ .Values.config.webConcurrency | quote }}
+  DJANGO_GCP_STORAGE_BUCKET_NAME: {{ .Values.config.djangoGcpStorageBucketName | quote }}
+  DJANGO_SECURE_SSL_REDIRECT: {{ .Values.config.djangoSecureSslRedirect | quote }}
+  DJANGO_ACCOUNT_ALLOW_REGISTRATION: {{ .Values.config.djangoAccountAllowRegistration | quote }}
+  DJANGO_DEFAULT_FROM_EMAIL: {{ .Values.config.djangoDefaultFromEmail | quote }}
+  DJANGO_SERVER_EMAIL: {{ .Values.config.djangoServerEmail | quote }}
+  DJANGO_EMAIL_SUBJECT_PREFIX: {{ .Values.config.djangoEmailSubjectPrefix | quote }}
+  SENTRY_ENVIRONMENT: {{ .Values.config.sentryEnvironment | quote }}
+  SENTRY_TRACES_SAMPLE_RATE: {{ .Values.config.sentryTracesSampleRate | quote }}

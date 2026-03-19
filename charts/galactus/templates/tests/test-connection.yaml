@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "galactus.fullname" . }}-test-connection
+  labels:
+    {{- include "galactus.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+spec:
+  restartPolicy: Never
+  containers:
+    - name: wget
+      image: busybox:1.37
+      command: ["wget"]
+      args: ["--spider", "--timeout=5", "http://{{ include "galactus.fullname" . }}-web:80/"]
