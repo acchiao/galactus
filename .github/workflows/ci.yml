@@ -38,23 +38,6 @@ jobs:
       - run: npm ci
       - run: npm run format:check
 
-  super-linter:
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - uses: super-linter/super-linter@v8.5.0
-        continue-on-error: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: charts/.*
-
   pytest:
     runs-on: ubuntu-24.04
     steps:
