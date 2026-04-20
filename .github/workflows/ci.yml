@@ -48,7 +48,7 @@ jobs:
           push: false
           load: true
           files: docker-compose.local.yml
-          targets: django
+          targets: django,postgres
           set: |
             django.cache-from=type=gha,scope=django-cached-tests
             django.cache-to=type=gha,scope=django-cached-tests,mode=max
