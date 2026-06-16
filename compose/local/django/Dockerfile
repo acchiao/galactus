@@ -44,7 +44,6 @@ RUN groupadd --gid 1000 dev-user \
   && chmod 0440 /etc/sudoers.d/dev-user
 
 ENV PATH="/${APP_HOME}/.venv/bin:$PATH"
-ENV PYTHONPATH="${APP_HOME}/.venv/lib/python3.13/site-packages:$PYTHONPATH"
 
 COPY ./compose/production/django/entrypoint /entrypoint
 COPY ./compose/local/django/start /start
