@@ -44,28 +44,14 @@ RUN groupadd --gid 1000 dev-user \
   && chmod 0440 /etc/sudoers.d/dev-user
 
 ENV PATH="/${APP_HOME}/.venv/bin:$PATH"
-ENV PYTHONPATH="${APP_HOME}/.venv/lib/python3.13/site-packages:$PYTHONPATH"
 
 COPY ./compose/production/django/entrypoint /entrypoint
-RUN sed -i 's/\r$//g' /entrypoint
-RUN chmod +x /entrypoint
-
 COPY ./compose/local/django/start /start
-RUN sed -i 's/\r$//g' /start
-RUN chmod +x /start
-
-
 COPY ./compose/local/django/celery/worker/start /start-celeryworker
-RUN sed -i 's/\r$//g' /start-celeryworker
-RUN chmod +x /start-celeryworker
-
 COPY ./compose/local/django/celery/beat/start /start-celerybeat
-RUN sed -i 's/\r$//g' /start-celerybeat
-RUN chmod +x /start-celerybeat
-
 COPY ./compose/local/django/celery/flower/start /start-flower
-RUN sed -i 's/\r$//g' /start-flower
-RUN chmod +x /start-flower
+RUN sed -i 's/\r$//g' /entrypoint /start /start-celeryworker /start-celerybeat /start-flower \
+  && chmod +x /entrypoint /start /start-celeryworker /start-celerybeat /start-flower
 
 
 ENTRYPOINT ["/entrypoint"]
