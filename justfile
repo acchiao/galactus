@@ -12,7 +12,7 @@ default:
 # build: Build python image.
 build *args:
     @echo "Building python image..."
-    @docker compose build {{args}}
+    @DOCKER_BUILDKIT=1 COMPOSE_DOCKER_CLI_BUILD=1 docker compose build {{args}}
 
 # up: Start up containers.
 up:
