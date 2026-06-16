@@ -2,7 +2,7 @@
   "name": "galactus",
   "version": "0.1.0",
   "devDependencies": {
-    "@babel/core": "^7.16.5",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.16.5",
     "@popperjs/core": "^2.10.2",
     "autoprefixer": "^10.4.0",
@@ -12,7 +12,7 @@
     "mini-css-extract-plugin": "^2.4.5",
     "node-sass-tilde-importer": "^1.0.2",
     "pixrem": "^5.0.0",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.15",
     "postcss-loader": "^8.0.0",
     "postcss-preset-env": "^10.0.3",
     "sass": "^1.93.1",
