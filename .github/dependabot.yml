@@ -31,6 +31,22 @@ updates:
           - minor
           - patch
 
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+      time: "09:00"
+      timezone: America/Los_Angeles
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
+    groups:
+      npm:
+        update-types:
+          - minor
+          - patch
+
   - package-ecosystem: docker
     directories:
       - compose/local/django/
@@ -79,3 +95,33 @@ updates:
       prefix: build
       include: scope
     open-pull-requests-limit: 20
+
+  - package-ecosystem: helm
+    directory: charts/galactus/
+    schedule:
+      interval: daily
+      time: "09:00"
+      timezone: America/Los_Angeles
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
+    groups:
+      helm:
+        patterns:
+          - "*"
+
+  - package-ecosystem: pre-commit
+    directory: /
+    schedule:
+      interval: daily
+      time: "09:00"
+      timezone: America/Los_Angeles
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
+    groups:
+      pre-commit:
+        patterns:
+          - "*"
