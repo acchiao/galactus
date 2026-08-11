@@ -42,6 +42,10 @@ updates:
       include: scope
     open-pull-requests-limit: 20
     groups:
+      babel:
+        patterns:
+          - "@babel/*"
+          - "babel-loader"
       npm:
         update-types:
           - minor
