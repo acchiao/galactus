@@ -66,6 +66,22 @@ dev = [
   "werkzeug[watchdog]==3.1.8",
 ]
 
+# ==== djLint ====
+[tool.djlint]
+profile = "django"
+include = "H017,H035"
+indent = 2
+max_line_length = 119
+blank_line_after_tag = "load,extends"
+close_void_tags = true
+format_css = true
+format_js = true
+# TODO: remove T002 when fixed https://github.com/djlint/djLint/issues/687
+# T038: djLint doesn't recognize allauth {% slot %}/{% endslot %} element tags
+ignore = "H006,H030,H031,T002,T038"
+css.indent_size = 2
+js.indent_size = 2
+
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 extend-exclude = [
@@ -136,33 +152,18 @@ lint.isort.force-single-line = true
 [tool.pyproject-fmt]
 keep_full_version = true
 
-[tool.pytest]
-# ==== pytest ====
-ini_options.minversion = "6.0"
-ini_options.addopts = "--ds=config.settings.test --reuse-db --import-mode=importlib"
-ini_options.python_files = [
-  "tests.py",
-  "test_*.py",
-]
-
-[tool.coverage]
-# ==== Coverage ====
-run.include = [ "galactus/**" ]
-run.omit = [ "*/migrations/*", "*/tests/*" ]
-run.plugins = [ "django_coverage_plugin" ]
-
 # ==== mypy ====
 [tool.mypy]
+ignore_missing_imports = true
 python_version = "3.13"
 check_untyped_defs = true
-ignore_missing_imports = true
-warn_unused_ignores = true
 warn_redundant_casts = true
-warn_unused_configs = true
+warn_unused_ignores = true
 plugins = [
   "mypy_django_plugin.main",
   "mypy_drf_plugin.main",
 ]
+warn_unused_configs = true
 overrides = [
   # Django migrations should not produce any errors:
   { module = "*.migrations.*", ignore_errors = true },
@@ -171,17 +172,17 @@ overrides = [
 [tool.django-stubs]
 django_settings_module = "config.settings.test"
 
-# ==== djLint ====
-[tool.djlint]
-blank_line_after_tag = "load,extends"
-close_void_tags = true
-format_css = true
-format_js = true
-# TODO: remove T002 when fixed https://github.com/djlint/djLint/issues/687
-ignore = "H006,H030,H031,T002"
-include = "H017,H035"
-indent = 2
-max_line_length = 119
-profile = "django"
-css.indent_size = 2
-js.indent_size = 2
+[tool.pytest]
+# ==== pytest ====
+ini_options.minversion = "6.0"
+ini_options.python_files = [
+  "test_*.py",
+  "tests.py",
+]
+ini_options.addopts = "--ds=config.settings.test --reuse-db --import-mode=importlib"
+
+[tool.coverage]
+# ==== Coverage ====
+run.include = [ "galactus/**" ]
+run.omit = [ "*/migrations/*", "*/tests/*" ]
+run.plugins = [ "django_coverage_plugin" ]
