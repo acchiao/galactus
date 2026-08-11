@@ -73,7 +73,6 @@ updates:
   - package-ecosystem: docker
     directories:
       - compose/local/node/
-      - compose/production/aws/
       - compose/production/postgres/
       - compose/production/traefik/
     schedule:
