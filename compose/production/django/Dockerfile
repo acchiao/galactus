@@ -47,7 +47,7 @@ COPY --from=client-builder ${APP_HOME}/galactus/static/webpack_bundles ${APP_HOM
 COPY --from=client-builder ${APP_HOME}/webpack-stats.json ${APP_HOME}/webpack-stats.json
 
 # Python 'run' stage
-FROM python:3.13.14-slim-bookworm AS python-run-stage
+FROM python:3.13.15-slim-bookworm AS python-run-stage
 
 ARG APP_HOME=/app
 
