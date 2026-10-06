@@ -22,7 +22,7 @@ repos:
       - id: detect-private-key
 
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: "1.32.0"
+    rev: "1.33.0"
     hooks:
       - id: django-upgrade
         args: ["--target-version", "6.0", "--skip", "default_auto_field"]
@@ -38,7 +38,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: v2.29.4
+    rev: v2.30.0
     hooks:
       - id: pyproject-fmt
 
