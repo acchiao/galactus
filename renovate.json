@@ -12,7 +12,7 @@
       "semanticCommitType": "build"
     },
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
       "automerge": true
     },
     {
