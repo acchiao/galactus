@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   lint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -33,7 +33,7 @@ jobs:
       - run: pre-commit run --show-diff-on-failure --color=always --all-files
 
   prettier:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -44,7 +44,7 @@ jobs:
       - run: npm run format:check
 
   pytest:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7
       - uses: docker/setup-buildx-action@v4
