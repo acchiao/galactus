@@ -1,0 +1,62 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":semanticCommits", ":enablePreCommit"],
+  "prConcurrentLimit": 20,
+  "automergeStrategy": "squash",
+  "packageRules": [
+    {
+      "matchPackageNames": ["*"],
+      "semanticCommitType": "build"
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    },
+    {
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "python"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "npm"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@babel/**", "babel-loader"],
+      "groupName": "babel"
+    },
+    {
+      "matchManagers": ["helmv3", "helm-values"],
+      "groupName": "helm"
+    },
+    {
+      "matchManagers": ["pre-commit"],
+      "groupName": "pre-commit"
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "matchFileNames": [
+        "compose/local/django/**",
+        "compose/local/docs/**",
+        "compose/production/django/**"
+      ],
+      "groupName": "docker-python"
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "matchFileNames": [
+        "compose/local/django/**",
+        "compose/local/docs/**",
+        "compose/production/django/**"
+      ],
+      "matchUpdateTypes": ["major", "minor"],
+      "enabled": false
+    }
+  ]
+}
