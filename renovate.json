@@ -3,7 +3,7 @@
   "extends": ["config:recommended", ":semanticCommits", ":enablePreCommit"],
   "configMigration": true,
   "minimumReleaseAge": "3 days",
-  "lockFileMaintenance": { "enabled": true, "automerge": true },
+  "lockFileMaintenance": { "enabled": true },
   "prConcurrentLimit": 20,
   "automergeStrategy": "squash",
   "packageRules": [
