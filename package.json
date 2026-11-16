@@ -2,12 +2,12 @@
   "name": "galactus",
   "version": "0.1.0",
   "devDependencies": {
-    "@babel/core": "^8.1.0",
+    "@babel/core": "^8.1.2",
     "@babel/preset-env": "^8.0.7",
     "@popperjs/core": "^2.10.2",
     "autoprefixer": "^10.6.2",
     "babel-loader": "^10.0.0",
-    "bootstrap": "^5.2.3",
+    "bootstrap": "^5.3.9",
     "css-loader": "^7.1.5",
     "mini-css-extract-plugin": "^2.10.2",
     "node-sass-tilde-importer": "^1.0.2",
@@ -15,14 +15,14 @@
     "postcss": "^8.5.32",
     "postcss-loader": "^8.0.0",
     "postcss-preset-env": "^11.6.2",
-    "sass": "^1.108.1",
+    "sass": "^1.108.2",
     "sass-loader": "^17.1.0",
     "webpack": "^5.112.2",
     "webpack-bundle-tracker": "^3.2.4",
     "webpack-cli": "^7.3.1",
     "webpack-dev-server": "^6.1.0",
     "webpack-merge": "^6.0.1",
-    "prettier": "^3.9.10"
+    "prettier": "^3.10.1"
   },
   "engines": {
     "node": "26.13"
